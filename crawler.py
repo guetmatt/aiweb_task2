@@ -6,17 +6,7 @@ from collections import defaultdict
 from whoosh.index import create_in
 from whoosh.fields import *
 from whoosh import index
-
-
-
-
-
-
-### INDEX WITH WHOOSH ###
-schema = Schema(title=TEXT(stored=True), content=TEXT)
-index = create_in("indexdir", schema)
-writer = index.writer()
-
+from whoosh.qparser import QueryParser
 
 
 
@@ -32,18 +22,35 @@ writer = index.writer()
 
 ### SEARCH FUNCTION ###
 
-def search(index: dict, query: list):
-    pages = set(index[query[0].lower()])
+# def search(index: dict, query: list):
+#     pages = set(index[query[0].lower()])
 
-    for word in query:
-        pages = pages & set(index[word.lower()])
+#     for word in query:
+#         pages = pages & set(index[word.lower()])
     
-    return pages
+#     return pages
+
+### INDEX WITH WHOOSH ###
+schema = Schema(title=TEXT(stored=True), content=TEXT)
+index = create_in("indexdir", schema)
+writer = index.writer()
+
+### SEARCH WITH WHOOSH ###
+
+def search(index, input_query: str):
+    
+    with index.searcher() as searcher:
+        query = QueryParser("content", index.schema).parse(input_query)
+        results = searcher.search(query)
+
+        # print all results
+        for r in results:
+            print(r)
+    
+    return results
 
 
-
-
-### CRAWLER AND INDEX ###
+### CRAWLER WITH INDEX CREATION ###
 
 prefix = "https://vm009.rz.uos.de/crawl/"
 start_url = prefix+"index.html"
@@ -79,7 +86,7 @@ while agenda:
 # write index to disk
 writer.commit()
 
-
-# test = search(index, ["might", "home"])
-# print(test)
+# test search
+test = search(index, "HOME might")
+print(test)
 
