@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Search</title>
+    </head>
+    <body>
+        <h1>Search Results</h1>
+            {% for result in results %}
+                <a href="{{ result.url }}" target="_blank">{{ result.title }}</a>
+                <ul>
+                    <li>
+                        <p>{{result.content}}</p>
+                    </li>
+                </ul>   
+            {% endfor %}
+
+        <input type="button" onclick="location.href='home';" value="Search for more..." />
+    </body>
+</html>

@@ -10,26 +10,6 @@ from whoosh.qparser import QueryParser
 
 
 
-### INDEX SETUP ###
-# index = defaultdict(set)
-
-# def add_content_to_index(content: str, url: str):
-#     tokens = content.split()
-#     for tok in tokens:
-#         tok = tok.strip(".!?()[]{};:,\\/").lower()
-#         index[tok].add(url)
-
-
-### SEARCH FUNCTION ###
-
-# def search(index: dict, query: list):
-#     pages = set(index[query[0].lower()])
-
-#     for word in query:
-#         pages = pages & set(index[word.lower()])
-    
-#     return pages
-
 ### INDEX WITH WHOOSH ###
 schema = Schema(title=TEXT(stored=True), content=TEXT)
 index = create_in("indexdir", schema)
