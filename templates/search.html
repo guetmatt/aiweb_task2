@@ -4,6 +4,7 @@
         <title>Search</title>
     </head>
     <body>
+        <input type="button" onclick="location.href='home';" value="Search for more..." />
         <h1>Search Results</h1>
             {% for result in results %}
                 <a href="{{ result.url }}" target="_blank">{{ result.title }}</a>
@@ -13,7 +14,5 @@
                     </li>
                 </ul>   
             {% endfor %}
-
-        <input type="button" onclick="location.href='home';" value="Search for more..." />
     </body>
 </html>
