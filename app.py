@@ -62,21 +62,20 @@ def internal_error(exception):
 # redirect from url "/" to "/home" or to "/no_index"
 @app.route("/")
 def redirect_to_home():
-    return redirect(url_for("home"))
-    # if index_exists():
-    #     return redirect(url_for("home"))
-    # else:
-    #     return redirect(url_for("no_index"))
+    if index_exists():
+        return redirect(url_for("home"))
+    else:
+        return redirect(url_for("no_index"))
 
 # home page with search query input
 @app.route("/home")
 def home():
     # index check
     # --> to avoid user manually going to /home
-    # if index_exists():
-    return render_template("home.html")    
-    # else:
-        # return redirect(url_for("no_index"))
+    if index_exists():
+        return render_template("home.html")    
+    else:
+        return redirect(url_for("no_index"))
 
 # landing page when no index is found
 @app.route("/no_index")
@@ -87,24 +86,18 @@ def no_index():
 # also checks for existence of index
 @app.route("/search")
 def search():
-    input_query = request.args.get("search_input")
-    if input_query == "":
-        return render_template("home.html")
-
-    search_results = run_search(input_query)
-    return render_template("search.html", results=search_results)
     # index check
     # --> to avoid user manually going to /search
-    # if index_exists():
-    #     input_query = request.args.get("search_input")
-    #     if input_query == "":
-    #         return render_template("home.html")
+    if index_exists():
+        input_query = request.args.get("search_input")
+        if input_query == "":
+            return render_template("home.html")
 
-    #     search_results = run_search(input_query)
+        search_results = run_search(input_query)
 
-    #     return render_template("search.html", results=search_results)
-    # else:
-    #     return redirect(url_for("no_index"))
+        return render_template("search.html", results=search_results)
+    else:
+        return redirect(url_for("no_index"))
 
 
     
