@@ -5,9 +5,15 @@ from whoosh.qparser import QueryParser
 
 from flask import Flask, redirect, url_for, request, render_template
 
+import traceback
 
 
 #--- Functions ---#
+@app.errorhandler(500)
+def internal_error(exception):
+   return "<pre>"+traceback.format_exc()+"</pre>"
+
+
 def index_exists():
     """Check existence of an index."""
     try:
