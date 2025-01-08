@@ -62,10 +62,11 @@ def internal_error(exception):
 # redirect from url "/" to "/home" or to "/no_index"
 @app.route("/")
 def redirect_to_home():
-    if index_exists():
-        return redirect(url_for("home"))
-    else:
-        return redirect(url_for("no_index"))
+    return redirect(url_for("home"))
+    # if index_exists():
+    #     return redirect(url_for("home"))
+    # else:
+    #     return redirect(url_for("no_index"))
 
 # home page with search query input
 @app.route("/home")
