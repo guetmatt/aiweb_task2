@@ -87,7 +87,7 @@ def no_index():
 # also checks for existence of index
 @app.route("/search")
 def search():
-    return render_template("search_input")
+    return render_template("search.html")
     # index check
     # --> to avoid user manually going to /search
     # if index_exists():
