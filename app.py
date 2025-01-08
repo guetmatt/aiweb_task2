@@ -12,8 +12,7 @@ import traceback
 def index_exists():
     """Check existence of an index."""
     try:
-        # ix = index.open_dir("indexdir")
-        ix = index.open_dir("aiweb_task2/indexdir")
+        ix = index.open_dir("indexdir")
         return True
     except:
         return False
@@ -24,7 +23,7 @@ def run_search(input_query: str):
     """Perform search on index.
     - input_query: search query from user"""
     
-    ix = index.open_dir("aiweb_task2/indexdir")
+    ix = index.open_dir("indexdir")
     
     with ix.searcher() as searcher:
         # check for documents that contain search query
@@ -73,10 +72,10 @@ def redirect_to_home():
 def home():
     # index check
     # --> to avoid user manually going to /home
-    if index_exists():
-        return render_template("home.html")    
-    else:
-        return redirect(url_for("no_index"))
+    # if index_exists():
+    return render_template("home.html")    
+    # else:
+        # return redirect(url_for("no_index"))
 
 # landing page when no index is found
 @app.route("/no_index")
@@ -87,18 +86,19 @@ def no_index():
 # also checks for existence of index
 @app.route("/search")
 def search():
+    return render_template("search_input")
     # index check
     # --> to avoid user manually going to /search
-    if index_exists():
-        input_query = request.args.get("search_input")
-        if input_query == "":
-            return render_template("home.html")
+    # if index_exists():
+    #     input_query = request.args.get("search_input")
+    #     if input_query == "":
+    #         return render_template("home.html")
 
-        search_results = run_search(input_query)
+    #     search_results = run_search(input_query)
 
-        return render_template("search.html", results=search_results)
-    else:
-        return redirect(url_for("no_index"))
+    #     return render_template("search.html", results=search_results)
+    # else:
+    #     return redirect(url_for("no_index"))
 
 
     
