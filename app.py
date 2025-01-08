@@ -9,11 +9,6 @@ import traceback
 
 
 #--- Functions ---#
-@app.errorhandler(500)
-def internal_error(exception):
-   return "<pre>"+traceback.format_exc()+"</pre>"
-
-
 def index_exists():
     """Check existence of an index."""
     try:
@@ -59,6 +54,10 @@ def run_search(input_query: str):
 
 #--- Flask app ---#
 app = Flask(__name__)
+
+@app.errorhandler(500)
+def internal_error(exception):
+   return "<pre>"+traceback.format_exc()+"</pre>"
 
 # redirect from url "/" to "/home" or to "/no_index"
 @app.route("/")
