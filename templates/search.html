@@ -2,10 +2,43 @@
 <html>
     <head>
         <title>Search</title>
+        <meta content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                background: #575757;
+                color: #d0e0d2
+            }
+            
+            h1 {
+                font-size: 2em;
+                color: #d0e0d2;
+                margin-bottom: 20px;
+            }
+
+            input {
+                align-self: flex-start;
+                margin-left: 10px;
+            }
+
+            a {
+                color: #d0dfe1;
+            }
+
+            .links {
+                align-self: flex-start;
+                margin-left: 10px;
+            }
+        </style>
     </head>
     <body>
         <input type="button" onclick="location.href='home';" value="Search for more..." />
         <h1>Search Results</h1>
+        <div class="links">
             {% for result in results %}
                 <a href="{{ result.url }}" target="_blank">{{ result.title }}</a>
                 <ul>
@@ -14,5 +47,6 @@
                     </li>
                 </ul>   
             {% endfor %}
+        </div>
     </body>
 </html>
