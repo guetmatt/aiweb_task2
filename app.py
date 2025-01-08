@@ -1,3 +1,4 @@
+#--- Imports ---#
 from whoosh.fields import *
 from whoosh import index
 from whoosh.qparser import QueryParser
@@ -6,11 +7,7 @@ from flask import Flask, redirect, url_for, request, render_template
 
 
 
-
-#-----------------#
 #--- Functions ---#
-#-----------------#
-
 def index_exists():
     """Check existence of an index."""
     try:
@@ -28,7 +25,7 @@ def run_search(input_query: str):
     ix = index.open_dir("indexdir")
     
     with ix.searcher() as searcher:
-        # check for documents where query appears in
+        # check for documents that contain search query
         query = QueryParser("content", ix.schema).parse(input_query)
         results = searcher.search(query)
 
@@ -53,10 +50,8 @@ def run_search(input_query: str):
     return result_links
 
 
-#-----------------#
-#--- FLASK APP ---#
-#-----------------#
 
+#--- Flask app ---#
 app = Flask(__name__)
 
 # redirect from url "/" to "/home" or to "/no_index"
@@ -68,9 +63,10 @@ def redirect_to_home():
         return redirect(url_for("no_index"))
 
 # home page with search query input
-# also checks for existence of index
 @app.route("/home")
 def home():
+    # index check
+    # --> to avoid user manually going to /home
     if index_exists():
         return render_template("home.html")    
     else:
@@ -85,6 +81,8 @@ def no_index():
 # also checks for existence of index
 @app.route("/search")
 def search():
+    # index check
+    # --> to avoid user manually going to /search
     if index_exists():
         input_query = request.args.get("search_input")
         if input_query == "":
