@@ -13,7 +13,7 @@ def index_exists():
     """Check existence of an index."""
     try:
         # ix = index.open_dir("indexdir")
-        ix = index.open_dir("/index)")
+        ix = index.open_dir("index)")
         return True
     except:
         return False
@@ -24,7 +24,7 @@ def run_search(input_query: str):
     """Perform search on index.
     - input_query: search query from user"""
     
-    ix = index.open_dir("/indexdir")
+    ix = index.open_dir("indexdir")
     
     with ix.searcher() as searcher:
         # check for documents that contain search query
